@@ -6,13 +6,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.itextpdf.text.DocumentException;
-
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -95,7 +90,7 @@ public class InventoryServelet extends HttpServlet {
     	        request.setAttribute("product", existingProduct);
     	        dispatcher.forward(request, response);
     }
-    
+
     private void updateProduct(HttpServletRequest request, HttpServletResponse response)
     	    throws SQLException, IOException {
     	        int id = Integer.parseInt(request.getParameter("id"));
@@ -120,9 +115,7 @@ public class InventoryServelet extends HttpServlet {
         response.setHeader(headerKey, headerValue);
 
 		List<Inventory> inventory = invenDAO.selectAllPro();
-
-        
-        CreateListPDF exporter = new CreateListPDF(inventory);
-		exporter.export(response);
+		DownloadList downloadobject = new DownloadList(inventory);
+		downloadobject.downloadList(response);
     }
 }
