@@ -8,11 +8,11 @@ import com.itextpdf.text.pdf.*;
 
 public class CreateListPDF {
 
-	private List<Inventory> inventory2;
+	private List<Inventory> inven_var;
 	
-	public CreateListPDF(List<Inventory> inventory2) {
+	public CreateListPDF(List<Inventory> inven_var) {
 		super();
-		this.inventory2 = inventory2;
+		this.inven_var = inven_var;
 	}
 
 	private void writeTableHeader(PdfPTable table) {
@@ -30,7 +30,7 @@ public class CreateListPDF {
     }
 	
 	private void writeTableData(PdfPTable table) {
-		for(Inventory inventory:inventory2) {
+		for(Inventory inventory:inven_var) {
 			
 			table.addCell(inventory.getName());
 	        table.addCell(String.valueOf(inventory.getRating()));
@@ -42,17 +42,15 @@ public class CreateListPDF {
         PdfWriter.getInstance(document, response.getOutputStream());
 
         document.open();
-        Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
-        font.setSize(18);
 
-        Paragraph p = new Paragraph("Product List", font);
-        p.setAlignment(Paragraph.ALIGN_CENTER);
+
+        Paragraph p = new Paragraph("Product List");
+
 
         document.add(p);
 
         PdfPTable table = new PdfPTable(2);
         table.setWidthPercentage(100f);
-        table.setWidths(new float[] {5.0f, 5.0f});
         table.setSpacingBefore(10);
 
         writeTableHeader(table);
